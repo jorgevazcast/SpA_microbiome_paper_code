@@ -17,7 +17,8 @@ working_dir <- "~/github_shared_code_and_publications/SpA_microbiome_paper_code"
 
 ## Scripts
 All scripts used in the analysis are available in the `script` directory
-* 2_alpha_diversity
+>
+>2_alpha_diversity
 ###### /scripts/2_alpha_diversity/Colon
 ###### `/scripts/2_alpha_diversity/GMM`
 * `/scripts/2_alpha_diversity/Ileum`
