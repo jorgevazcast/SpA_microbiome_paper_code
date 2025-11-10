@@ -1,0 +1,9 @@
+Diagnosis Richness -- Kruskal–Wallis test: p-value = 0.02351889 , FDR = 0.05400902 , effect size (eta²) = 0.04910627 , N =  115 
+Diagnosis InvSimpson -- Kruskal–Wallis test: p-value = 0.09351617 , FDR = 0.09351617 , effect size (eta²) = 0.02445752 , N =  115 
+Diagnosis Pielou -- Kruskal–Wallis test: p-value = 0.03600601 , FDR = 0.05400902 , effect size (eta²) = 0.04150124 , N =  115 
+Disease_activity Richness -- Kruskal–Wallis test: p-value = 0.1887247 , FDR = 0.2158333 , effect size (eta²) = 0.01085311 , N =  126 
+Disease_activity InvSimpson -- Kruskal–Wallis test: p-value = 0.2158333 , FDR = 0.2158333 , effect size (eta²) = 0.008670715 , N =  126 
+Disease_activity Pielou -- Kruskal–Wallis test: p-value = 0.1266562 , FDR = 0.2158333 , effect size (eta²) = 0.01733787 , N =  126 
+Disease Richness -- Wilcoxon signed-rank test: p-value = 0.07027141 , FDR = 0.07027141 , effect size (r) = 0.1835886 , N =  129 
+Disease InvSimpson -- Wilcoxon signed-rank test: p-value = 0.0664036 , FDR = 0.07027141 , effect size (r) = 0.153015 , N =  129 
+Disease Pielou -- Wilcoxon signed-rank test: p-value = 0.02911323 , FDR = 0.07027141 , effect size (r) = 0.2070078 , N =  129 

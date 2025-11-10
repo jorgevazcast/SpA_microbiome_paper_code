@@ -14,5 +14,9 @@ R packages:
 * pROC_1.17.0.1
 * mltools_0.3.5
 
+Important! Change the working directory before loading the different functions
+```R
+working_dir <- "~/github_shared_code_and_publications/SpA_microbiome_paper_code" 
+```
 ## Raw data
 FASTQ files for the project can be found under the following EGA accession number
