@@ -12,8 +12,6 @@ source(paste0(working_dir,"/functions/supplementary_figures_functions.R"))
 ############################        SCRIPT        ############################
 ##############################################################################
 
-# /home/luna.kuleuven.be/u0141268/Postdoc_Raes/Projects/giant_cohort_spa/2_alpha_diversity/Colon/Diversity_test.R
-# load(paste0(working_dir,"/1_infiles/Colon_biopsies/physeq.colon.genus.rar.RData"))
 in_phylo <- readRDS(paste0(working_dir,"/1_infiles/Colon_biopsies/GTDB_r220/physeq_genus.rar.rds"))
 # in_phylo <- physeq.colon.genus.rar
 Metadata <- sample_data(in_phylo)

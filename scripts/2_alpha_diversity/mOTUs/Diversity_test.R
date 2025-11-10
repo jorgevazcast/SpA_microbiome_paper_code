@@ -3,7 +3,7 @@ library("phyloseq")
 library("ggplot2")
 library("microbiome")
 
-working_dir <- "~/Postdoc_Raes/Projects/giant_cohort_spa" 
+working_dir <- "~/github_shared_code_and_publications/SpA_microbiome_paper_code" 
 
 source(paste0(working_dir,"/functions/Extended_Statistical_Toolkit_functions.R"))
 source(paste0(working_dir,"/functions/supplementary_figures_functions.R"))
@@ -24,10 +24,8 @@ load_RData <- function(file) {
 ############################        SCRIPT        ############################
 ##############################################################################
 
-# /home/luna.kuleuven.be/u0141268/Postdoc_Raes/Projects/giant_cohort_spa/2_alpha_diversity/Colon/Diversity_test.R
-# load(paste0(working_dir,"/1_infiles/Colon_biopsies/physeq.colon.genus.rar.RData"))
-= <- load_RData(paste0(working_dir,"/1_infiles/QMP_mOTUS/physeq.qmp.motus.RData"))
-# in_phylo <- physeq.colon.genus.rar
+in_phylo <- load_RData(paste0(working_dir,"/1_infiles/QMP_mOTUS/physeq.qmp.motus.RData"))
+
 Metadata <- sample_data(in_phylo)
 
 ### Estimate the alpha diversity ###
@@ -74,8 +72,6 @@ for(i in Diversity_index){
 }
 res_Disease_activity$p.adjust <-  p.adjust(res_Disease_activity$p.value,method="BH")
 write.table(res_Disease_activity, file = "KW_Disease_activity.tsv", sep = "\t", row.names = F)
-
-
 
 ####################################################
 ############### Plot and poshoc test ###############

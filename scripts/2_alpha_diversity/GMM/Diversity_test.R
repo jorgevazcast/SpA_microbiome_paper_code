@@ -3,7 +3,8 @@ library("phyloseq")
 library("ggplot2")
 library("microbiome")
 library("vegan")
-working_dir <- "~/Postdoc_Raes/Projects/giant_cohort_spa" 
+
+working_dir <- "~/github_shared_code_and_publications/SpA_microbiome_paper_code" 
 
 source(paste0(working_dir,"/functions/Extended_Statistical_Toolkit_functions.R"))
 source(paste0(working_dir,"/functions/supplementary_figures_functions.R"))
@@ -24,8 +25,6 @@ load_RData <- function(file) {
 ############################        SCRIPT        ############################
 ##############################################################################
 
-# /home/luna.kuleuven.be/u0141268/Postdoc_Raes/Projects/giant_cohort_spa/2_alpha_diversity/Colon/Diversity_test.R
-# load(paste0(working_dir,"/1_infiles/Colon_biopsies/physeq.colon.genus.rar.RData"))
 in_phylo <- load_RData(paste0(working_dir,"/1_infiles/QMP_GMM/physeq.qmp.gmm.RData"))
 # in_phylo <- physeq.colon.genus.rar
 Metadata <- sample_data(in_phylo)

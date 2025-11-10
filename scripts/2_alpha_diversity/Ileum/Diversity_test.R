@@ -3,7 +3,7 @@ library("phyloseq")
 library("ggplot2")
 library("microbiome")
 
-working_dir <- "~/Postdoc_Raes/Projects/giant_cohort_spa" 
+working_dir <- "~/github_shared_code_and_publications/SpA_microbiome_paper_code" 
 
 source(paste0(working_dir,"/functions/Extended_Statistical_Toolkit_functions.R"))
 source(paste0(working_dir,"/functions/supplementary_figures_functions.R"))
@@ -12,8 +12,6 @@ source(paste0(working_dir,"/functions/supplementary_figures_functions.R"))
 ############################        SCRIPT        ############################
 ##############################################################################
 
-#load(paste0(working_dir,"/1_infiles/Ileum_biopsies/physeq.ileum.genus.rar.RData"))
-#in_phylo <- physeq.ileum.genus.rar
 in_phylo <- readRDS(paste0(working_dir,"/1_infiles/Ileum_biopsies/GTDB_r220/physeq_genus.rar.rds"))
 Metadata <- sample_data(in_phylo)
 
@@ -61,8 +59,6 @@ for(i in Diversity_index){
 }
 res_Disease_activity$p.adjust <-  p.adjust(res_Disease_activity$p.value,method="BH")
 write.table(res_Disease_activity, file = "KW_Disease_activity.tsv", sep = "\t", row.names = F)
-
-
 
 ####################################################
 ############### Plot and poshoc test ###############
