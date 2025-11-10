@@ -19,10 +19,10 @@ working_dir <- "~/github_shared_code_and_publications/SpA_microbiome_paper_code"
 All scripts used in the analysis are available in the `script` directory
 >
 **2_alpha_diversity**
-###### /scripts/2_alpha_diversity/Colon
-###### `/scripts/2_alpha_diversity/GMM`
-* `/scripts/2_alpha_diversity/Ileum`
-* `/scripts/2_alpha_diversity/mOTUs`
+* `/scripts/2_alpha_diversity/Colon/Diversity_test.R`
+* `/scripts/2_alpha_diversity/GMM/Diversity_test.R`
+* `/scripts/2_alpha_diversity/Ileum/Diversity_test.R`
+* `/scripts/2_alpha_diversity/mOTUs/Diversity_test.R`
 
 ## Raw data
 FASTQ files for the project can be found under the following EGA accession number
