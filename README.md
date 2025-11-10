@@ -6,7 +6,13 @@ This repository contains a comprehensive pipeline for analyzing gut microbiome d
 
 ## Scripts
 All scripts used in the analysis are available in the `script` directory
-> Dive right in with our interactive Colab notebook! It's the best way to get a hands-on feel for TabPFN, walking you through installation, classification, and regression examples.
+###### R version 4.1.2 (2021-11-01) -- "Bird Hippie"
+R packages:
+* caret_6.0-86
+* DMwR_0.4.1
+* ROSE_0.0-4
+* pROC_1.17.0.1
+* mltools_0.3.5
 
 ## Raw data
 FASTQ files for the project can be found under the following EGA accession number
