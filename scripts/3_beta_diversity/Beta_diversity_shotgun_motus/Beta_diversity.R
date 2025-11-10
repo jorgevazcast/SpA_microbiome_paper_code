@@ -27,18 +27,10 @@ taxa_QMP<-filter_low_prevalence(in.table = otable, max_percentage_0 = 80 )
 
 ###############################
 ###### Variables to use  ######
-### remove the cell counts and "Alcohol"
-#var2se <- c("Disease","Diagnosis","Disease_activity","ASDAS","basdaiq1","basdaiq2","basdaiq3","basdaiq4","basdaiq5","basdaiq6","basdaitot","CRP","ESR",
-#"NSAID_use","NSAID_index","Symptoms_duration","Age_at_visit","Sex","HLAB27","Colon_inflammation","Ileum_inflammation",
-#"Gut_inflammation","Fecal_calpro_values","Smoking","artritis","uveitis","enthesitis_heel",
-#"enthesitis_general","dactylitis","psoriasis_skin","psoriasis_nail","Crohns_disease","ulcerative_colitis","inflam_SI_RX","inflam_SI_MRI",
-#"Reumafactor","inflam_back_pain...47","Water","BMI" )
 
-#load("/home/luna.kuleuven.be/u0141268/Dropbox/1-GIANT_last/final_analysis/Varaiable_correlations/metagenomic_varaibles/Shotgun_varaibles/Variables2Use.RData")
 load(paste0(path_dir, "/Metadata/metagenomic_varaibles_associations/Shotgun_varaibles/Variables2Use.RData" ))
 var2se <- as.character(Variables2Use$Var)
 
-#load("/home/luna.kuleuven.be/u0141268/Dropbox/1-GIANT_last/final_analysis/Varaiable_correlations/metagenomic_varaibles/Shotgun_varaibles/Var2eliminate.RData")
 load(paste0(path_dir, "/Metadata/metagenomic_varaibles_associations/Shotgun_varaibles/Var2eliminate.RData" ))
 Variables2eliminate <- Var2eliminate$Var
 var2se <- var2se[!var2se %in% Variables2eliminate]
@@ -71,7 +63,7 @@ for(i in Varaibles2use){
 }
 
 #################################################################################
-########################	ADONIS		#################################
+########################	ADONIS		###############################
 #################################################################################
 Metadata2use <- Metadata[,match(Varaibles2use,colnames(Metadata))]
 taxa_QMP <- taxa_QMP[,match(rownames(Metadata2use), colnames(taxa_QMP))]
@@ -84,7 +76,7 @@ bray.table.ADONIS <- bray.table.ADONIS[order(bray.table.ADONIS$p.value),]
 
 
 #################################################################################
-########################	Plot all the PCoA	#########################
+########################	Plot all the PCoA	###############################
 #################################################################################
 PCoA_plot_dir <- "./PCoA_plot_dir"
 dir.create(PCoA_plot_dir)
@@ -104,9 +96,9 @@ AllPCoAs  <-   ggarrange( plotlist = list_PCoA )
 ggsave("AllPCoAs.pdf", AllPCoAs, width=40, height=20)
 AllPCoAs
 
-#################################################################################
-########################	ordiR2step		#########################
-#################################################################################
+##########################################################################
+########################	ordiR2step	########################
+##########################################################################
 bray.table.ADONIS <- data.frame(bray.table.ADONIS)
 bray.table.ADONIS$BH.adj.p.value <- as.numeric(as.character(bray.table.ADONIS$BH.adj.p.value))
 bray.table.ADONIS <- subset(bray.table.ADONIS,BH.adj.p.value < FDR_pval)
@@ -118,7 +110,7 @@ N<-dim(Metadata2use)[1] # N samples
 #####  bray
 taxa_matrix <- taxa_matrix[match( rownames(Metadata2use) ,  rownames(taxa_matrix)),]
 
-########################	ordiR2step		#########################
+########################	ordiR2step	########################
 capscale_bray<-capscale_cum_variance( in.matrix =  taxa_matrix , Distance = "bray", in.Metadata = data.frame(Metadata2use),adj.pval.cutof =FDR_pval, prefix = "bray")
 capscale_bray
 #capscale_bray[["non_redundant"]]

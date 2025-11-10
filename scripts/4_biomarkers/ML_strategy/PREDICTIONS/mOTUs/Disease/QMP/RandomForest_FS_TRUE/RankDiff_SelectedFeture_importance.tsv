@@ -1,0 +1,11 @@
+Feature	Discrete	Continuous	Level1	N_level1	Level2	N_level2	mean.level1	mean.level2	median.level1	median.level2	sd.level1	sd.level2	WT.statistic	p.value	Dominant	q.value
+Alistipes_species_incertae_sedis__ext_mOTU_v26_17843_	Variable	value	Disease.HC	40	Disease.SpA	89	2.25	1.21348314606742	0	0	4.71631103126053	3.51772107954322	1960.5	0.236776517211049	Disease.SpA	0.263085019123387
+Bacteroidales_species_incertae_sedis__meta_mOTU_v25_12262_	Variable	value	Disease.HC	40	Disease.SpA	89	3.4	1.76404494382022	1.5	1	3.92754898449924	1.86488161889771	2062.5	0.141523238696656	Disease.HC	0.19453078334778
+Bacteroides_rodentium_uniformis__ref_mOTU_v25_00855_	Variable	value	Disease.HC	40	Disease.SpA	89	51.3	29.7303370786517	23	6	80.2682042616167	52.6398060676484	2297.5	0.00834892944989804	Disease.HC	0.0278297648329935
+Clostridiales_species_incertae_sedis__mags_db_all_139_	Variable	value	Disease.HC	40	Disease.SpA	89	1.975	0.370786516853933	0	0	4.42885352994921	1.65407226449747	2167.5	0.00175516571000831	Disease.SpA	0.00877582855004154
+Clostridiales_species_incertae_sedis__meta_mOTU_v25_12356_	Variable	value	Disease.HC	40	Disease.SpA	89	14.975	8.03370786516854	15	4	13.5334106982758	12.4548725753511	2452	0.000598372308301621	Disease.HC	0.00598372308301621
+Eubacterium_sp__CAG_38__ref_mOTU_v25_07679_	Variable	value	Disease.HC	40	Disease.SpA	89	7.075	2.68539325842697	1	1	12.7749504489982	5.48260784335748	2045	0.155624626678224	Disease.SpA	0.19453078334778
+Lachnospiraceae_species_incertae_sedis__ext_mOTU_v26_18135_	Variable	value	Disease.HC	40	Disease.SpA	89	6.95	2.74157303370787	0	0	12.1843741882369	5.69395231381435	2078.5	0.0903698992922806	Disease.SpA	0.166345096439311
+Sutterella_species_incertae_sedis__ext_mOTU_v26_26637_	Variable	value	Disease.HC	40	Disease.SpA	89	1.325	0.370786516853933	0	0	3.26117408462909	0.958004821489932	1898.5	0.35902548177189	Disease.SpA	0.35902548177189
+Sutterella_wadsworthensis__ref_mOTU_v25_03066_	Variable	value	Disease.HC	40	Disease.SpA	89	10.15	3.15730337078652	0	0	16.6387715276314	7.54667126559858	2139	0.0385462338394294	Disease.SpA	0.0963655845985734
+Verrucomicrobia_bacterium_CAG_312_58_20__meta_mOTU_v25_12743_	Variable	value	Disease.HC	40	Disease.SpA	89	0.95	0.629213483146067	0	0	2.24122219404434	3.03158382874781	1955	0.0998070578635864	Disease.SpA	0.166345096439311

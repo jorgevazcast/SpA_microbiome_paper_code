@@ -1,0 +1,11 @@
+Feature	Mean	SD	Increase	WTSignificant
+Alistipes_species_incertae_sedis__ext_mOTU_v26_17843_	9.30953055635954	11.5594873502539	Disease.SpA	
+Bacteroidales_species_incertae_sedis__meta_mOTU_v25_12262_	38.4460000877076	21.0754482612151	Disease.HC	
+Bacteroides_rodentium_uniformis__ref_mOTU_v25_00855_	67.9194846820705	26.2779261311441	Disease.HC	*
+Clostridiales_species_incertae_sedis__mags_db_all_139_	18.8748081187131	15.030709086793	Disease.SpA	*
+Clostridiales_species_incertae_sedis__meta_mOTU_v25_12356_	97.7913504133459	5.26038435525005	Disease.HC	*
+Eubacterium_sp__CAG_38__ref_mOTU_v25_07679_	9.3626326192813	9.29115442407747	Disease.SpA	
+Lachnospiraceae_species_incertae_sedis__ext_mOTU_v26_18135_	44.029153717743	21.6349894480024	Disease.SpA	
+Sutterella_species_incertae_sedis__ext_mOTU_v26_26637_	38.4803733719768	15.6736520099914	Disease.SpA	
+Sutterella_wadsworthensis__ref_mOTU_v25_03066_	50.9245894272362	22.0013793267868	Disease.SpA	*
+Verrucomicrobia_bacterium_CAG_312_58_20__meta_mOTU_v25_12743_	8.63456948694752	8.81981143630346	Disease.SpA	

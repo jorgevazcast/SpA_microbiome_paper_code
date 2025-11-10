@@ -1,0 +1,152 @@
+set.seed(12345)
+library(glmmTMB)    
+library(glmnet)
+library(lmerTest)
+library(microbiome)
+
+argscomd = commandArgs(trailingOnly=TRUE)
+
+log.file <- as.character(argscomd[1]) # log.file <- "/home/luna.kuleuven.be/u0141268/Postdoc_Raes/Projects/giant_cohort_spa/1_infiles/Metabolomics/physeq.metabolites.norm.RData"
+Variable = as.character(argscomd[2]) ##  Variable = "Disease"  # Variable = "Disease_activity" # Histological_Inflammation Histology
+sig_features =  as.character(argscomd[3]) # sig_features = "/home/luna.kuleuven.be/u0141268/Postdoc_Raes/Projects/giant_cohort_spa/4_biomarkers/Metabolome/DA/Disease/q_values_table.tsv"
+cat("\n Parameters: ", "\n", log.file,"\n", Variable,"\n", sig_features,"\n" )
+
+###############################################
+######## Create the outfiles directory ########
+
+dir2create <- paste0(getwd(),"/",Variable)
+dir.create(file.path(dir2create ), showWarnings = FALSE)
+setwd(file.path(dir2create))
+
+#################################
+######## q-value cut-off ########
+p_val_cut_off <- 0.1
+
+#######################################################################################################################################
+##########################################              Load the functions                       ######################################
+#######################################################################################################################################
+
+path_func <- "/home/luna.kuleuven.be/u0141268/github_projects/CATBD"
+#source(paste0(path_func,"/Functions/functions_Biomarker.R"))
+source(paste0(path_func,"/Functions/data_processing_functions.R"))
+source(paste0(path_func,"/Functions/statistical_test_functions.R"))
+
+path_func_SpA <- "/home/luna.kuleuven.be/u0141268/Postdoc_Raes/Projects/giant_cohort_spa"
+source(paste0(path_func_SpA,"/functions/CATDB_supplementary_functions.R"))
+
+path_func_stats <- "/home/luna.kuleuven.be/u0141268/github_projects/supplementary-statistical-functions"
+source(paste0(path_func_stats,"/Functions/Statistical_model_tools.R"))
+
+#######################################################################################################################################
+##########################################                  Read the data                        ######################################
+#######################################################################################################################################
+
+### Read the phyloseq objects
+physeq.log <- read_input_phyloseq(log.file)
+
+taxa_names(physeq.log) <- gsub("[^[:alnum:]]", "_", taxa_names(physeq.log))
+taxa_names(physeq.log) <- gsub(" ", "_", taxa_names(physeq.log))	
+
+#######################################################################################################################################################
+##########################################                  Read the significant features                        ######################################
+#######################################################################################################################################################
+
+q_values_table <- read.table(sig_features,sep="\t", header = T)
+
+q_values_table <- subset(q_values_table, ACAT <= p_val_cut_off ) ### The ACAT must be significant
+Sig_taxas <- apply(   q_values_table[, 2:(ncol(q_values_table)-1)], 1, function(x) { any(x <= p_val_cut_off)  } ) ### Other test must be significat
+q_values_table_sig <- q_values_table[Sig_taxas,]
+
+#######################################################################################################################################################
+##########################################                 Cofound by the diffrent features                      ######################################
+#######################################################################################################################################################
+load("/home/luna.kuleuven.be/u0141268/Postdoc_Raes/Projects/giant_cohort_spa/Metadata/metagenomic_varaibles_associations/Shotgun_varaibles/Variables2Use.RData")
+load("/home/luna.kuleuven.be/u0141268/Postdoc_Raes/Projects/giant_cohort_spa/Metadata/metagenomic_varaibles_associations/Shotgun_varaibles/Var2eliminate.RData")
+var2use <- as.character(Variables2Use$Var)
+Variables2eliminate <- Var2eliminate$Var
+Variables <- var2use[!var2use %in% Variables2eliminate]
+
+Features <- unique(q_values_table_sig$Feature)
+
+####################################################
+#####################   RAR   #####################
+
+#### Test the individual features using the model and usign the Anova function to check if its significant
+log_test_anova <- data.frame()
+for(i in  Features){
+
+	subphylo_df <- psmelt( prune_taxa(i,physeq.log) )	
+	temp_res <- data.frame()
+	for(j in Variables){
+		tempList <- glm_function(Y.var = "Abundance", X.var = j, in.df=subphylo_df )
+		tempAnova <- data.frame(Feature = i,tempList$anova)
+		temp_res <- rbind(temp_res,tempAnova)
+		rm(tempList,tempAnova)
+	}
+	temp_res$q.value <- p.adjust(temp_res$Pr..Chisq., method = "BH")
+	log_test_anova <- rbind(log_test_anova,temp_res)
+	rm(temp_res,subphylo_df)
+}
+log_test_anova <- log_test_anova[order(log_test_anova$Pr..Chisq.),]
+write.table(file="log_test_anova.tsv",log_test_anova,sep = "\t", col.names = TRUE, row.names = F)
+
+sig_log_test_anova <- log_test_anova[log_test_anova$q.value <= 0.1,]
+sig_log_test_anova <- sig_log_test_anova[complete.cases(sig_log_test_anova),]
+
+
+#### Cofound the analysis ####
+log_cofound_test_anova <- data.frame()
+log_cofound_summary <- data.frame()
+for(i in unique(sig_log_test_anova$Feature)){
+
+	tempsig <- sig_log_test_anova[sig_log_test_anova$Feature == i,]
+	subphylo_df <- psmelt( prune_taxa(i,physeq.log) )	
+	
+	for(j in unique(tempsig$var)){
+	
+		tempList <- glm_cofound_function(Y.var = "Abundance", NULL_model = c("Water","Age_at_visit"), 
+				Test_model = c("Water","Age_at_visit",j), in.df = subphylo_df)  
+				 
+		stast_anova <- data.frame(Feature = i,Variable2Test = j, tempList[["Stats"]])
+		log_cofound_test_anova <- rbind(log_cofound_test_anova,stast_anova)
+	
+		temp_summary <- summary(tempList[["Model"]])
+		temp_summary <- data.frame(temp_summary$coefficients)
+		temp_summary <- data.frame(Feature = i, Variable2Test = j, Varaible = rownames(temp_summary) ,temp_summary)
+		colnames(temp_summary) <- gsub( "Pr...t..", "p.value", colnames(temp_summary)  )
+		temp_summary$q.value <- p.adjust(temp_summary$p.value, method = "BH")
+		
+		log_cofound_summary <- rbind(log_cofound_summary, temp_summary)		
+		rm(temp_summary,tempList,stast_anova)
+
+	}
+	
+}
+log_cofound_test_anova <- log_cofound_test_anova[complete.cases(log_cofound_test_anova$Pr_Chi),]
+log_cofound_test_anova$q.value <- p.adjust(log_cofound_test_anova$Pr_Chi,method = "BH")
+write.table(file="log_cofound_test_anova.tsv",log_cofound_test_anova,sep = "\t", col.names = TRUE, row.names = F)
+write.table(file="log_cofound_summary.tsv",log_cofound_summary,sep = "\t", col.names = TRUE, row.names = F)
+
+
+#######################################################################################################################################################
+##########################################                   Cofound by the age                         ######################################
+#######################################################################################################################################################
+
+
+#### RAR ####
+df2plot <- parser_biomarkers(cofound_summary = log_cofound_summary, cofound_test_anova = log_cofound_test_anova, 
+			FDR = 0.1, Model_FDR_fil = T, remove_var = c("Water","Age_at_visit","(Intercept)")) 
+rar_plot <- ggplot(df2plot, aes(Varaible, Feature, shape = Dominance, fill = Dominance, size = abs(Estimate))) + 
+		theme_bw() + 
+		theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) + 
+		geom_point(color = "black") +  # black outline for solid shapes
+		scale_shape_manual(values = c("Decrease" = 25, "Increase" = 24)) + 
+		scale_fill_manual(values = c("Decrease" = "red", "Increase" = "blue")) + 
+		ggtitle("Metabolome associations")
+rar_plot
+ggsave(file = "rar_plot.pdf", rar_plot , width = 10, height =  4 )
+save(file = "rar_plot.RData", rar_plot )
+save(file = "df2plot.RData", df2plot )
+
+
+

@@ -1,0 +1,5 @@
+"Feature"	"Variable2Test"	"Model"	"Df"	"Deviance"	"Pr_Chi"	"q.value"
+"Tryptamine"	"NSAID_use"	"Abundance ~ Water + Age_at_visit + NSAID_use"	1	4.84223234421581	0.00156731841275837	0.00626927365103347
+"Tryptamine"	"Disease"	"Abundance ~ Water + Age_at_visit + Disease"	1	3.88700016045188	0.00486070221888793	0.00972140443777585
+"Tryptamine"	"Disease_activity"	"Abundance ~ Water + Age_at_visit + Disease_activity"	2	4.16238437005445	0.0158291514530564	0.0158291514530564
+"Tryptamine"	"Fecal_calpro_values"	"Abundance ~ Water + Age_at_visit + Fecal_calpro_values"	1	3.5313673658131	0.00817459285013119	0.0108994571335083
