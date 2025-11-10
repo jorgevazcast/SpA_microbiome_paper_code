@@ -1,0 +1,227 @@
+# Rscript --vanilla Beta_diversity.R
+set.seed(12345)
+library(phyloseq)
+library("ggplot2")
+library(ggpubr)
+library(gridExtra)
+
+working_dir <- "~/github_shared_code_and_publications/SpA_microbiome_paper_code"
+source(paste0(working_dir, "/functions/beta_diver_functions_V9.R"))
+
+#####################################################################################################################################################
+##########################################################      FUNCTIONS       #####################################################################
+#####################################################################################################################################################
+
+PCoA_grapper <- function(Var = "", tempMetadata = data.frame(), table.ADONIS=data.frame(),taxa_mat=matrix()){
+
+	N_samples <- table.ADONIS[Var,"N"]
+	pval <-  round(  as.numeric(as.character(table.ADONIS[Var,"p.value"])) ,digits=3)
+	FDR <- round(  as.numeric(as.character(table.ADONIS[Var,"BH.adj.p.value"])) ,digits=3)
+	R2 <- round(  as.numeric(as.character(table.ADONIS[Var,"R2"])) ,digits=3)	
+	Fmodel <- round(  as.numeric(as.character(table.ADONIS[Var,"Fmodel"])) ,digits=3)		
+
+	
+	PCoA_title <- paste0(Var,"\n"," p-val = ", pval,"; FDR = ", FDR,"; R2 = ",R2,"; F model = ", Fmodel,"; N = ", N_samples)
+
+	tempMetadata$VarTemp <- tempMetadata[,Var]
+	tempMetadata <- tempMetadata[!is.na(tempMetadata$VarTemp),]
+	Levels <- sort(unique(tempMetadata$VarTemp))
+	if(any(Levels == "HC")){Levels <- c("HC",Levels[!grepl("HC",Levels)])}
+	
+	if( length(sort(unique(tempMetadata$VarTemp))) == 2){colors<- c("blue","red");names(colors) <- Levels }
+	if( length(sort(unique(tempMetadata$VarTemp))) == 3){colors<- c("blue","red","darkgreen");names(colors) <- Levels }
+	if( length(sort(unique(tempMetadata$VarTemp))) == 4){colors<- c("blue","red","darkgreen","magenta");names(colors) <- Levels }
+#	if( length(sort(unique(tempMetadata$VarTemp))) == 4){colors<- c("blue","#D95F02","#7570B3","#E7298A");names(colors) <- Levels }
+#  
+	taxa_mat <- taxa_mat[match( rownames(tempMetadata) , rownames(taxa_mat) ),]
+
+	list_ordination <- vegan_PCoA_envfit(in.matrix= taxa_mat, Metadata2enfit=data.frame(tempMetadata), distance = "euclidean")
+	PCoA<-list_ordination[["PCoA"]]; xlab<-list_ordination[["xlab"]]; ylab<-list_ordination[["ylab"]]; fit<-list_ordination[["fit"]]
+	df_ord<-list_ordination[["df_ord"]]
+
+	ret_list <- ggplot_envfit(df_ord, ord=PCoA,fit,Metadata=data.frame(tempMetadata),alpha_pval=0.1 )
+		df_ord <- ret_list[["df_ord"]]
+		df_arrows <- ret_list[["df_arrows"]]
+		df_factors <- ret_list[["df_factors"]]
+		
+	if(Var == "Disease_activity"){
+		colors <- c("#0000ee","#eead0e","#ee7621")
+		df_ord$VarTemp <- factor(df_ord$VarTemp, levels=c("HC","SpALow", "SpAHigh"))
+		PCoAplot <- ggplot(data = df_ord, aes(x = x, y = y, color = VarTemp )) + theme_bw() + 
+			geom_point( aes(color = VarTemp), size =3) + 
+			xlab(xlab) + ylab(ylab)  + 
+			stat_ellipse(aes(x = x, y = y,  group=VarTemp, fill=VarTemp ), 
+			linetype = 2 ,type = "norm" , geom="polygon",level=0.8,alpha=0.1, show.legend=F) +	
+			scale_fill_manual(values=colors ) + scale_color_manual(values=colors)+
+			ggtitle(PCoA_title)  +  labs(color = Var)
+			
+	}else if(class(tempMetadata$VarTemp) == "character" | class(tempMetadata$VarTemp) == "factor" ){
+	
+		df_ord$VarTemp <- factor(as.character(df_ord$VarTemp), levels=Levels)
+		PCoAplot <- ggplot(data = df_ord, aes(x = x, y = y, color = VarTemp )) + theme_bw() + 
+			geom_point( aes(color = VarTemp), size =3) + 
+			xlab(xlab) + ylab(ylab)  + scale_color_manual(values=colors) + scale_fill_manual(values=colors) +
+			stat_ellipse(aes(x = x, y = y,  group=VarTemp, fill=VarTemp ), 
+			linetype = 2 ,type = "norm" , geom="polygon",level=0.8,alpha=0.1, show.legend=F) +	
+			ggtitle(PCoA_title) +  labs(color = Var)
+	}else{
+		yourname_color_palette <- c("#74869c", "#6daddd", "#83adbb", "#b3d17c", "#ddaa7b","#ab5548")
+		colors2use <- colorRampPalette(yourname_color_palette)(length(sort(unique(tempMetadata$VarTemp))))
+		PCoAplot <- ggplot(data = df_ord, aes(x = x, y = y, color = VarTemp )) + theme_bw() + 
+			geom_point( aes(color = VarTemp), size =3) + 
+			xlab(xlab) + ylab(ylab)  +	
+			ggtitle(PCoA_title) +   scale_colour_gradientn(colors=colors2use) +  labs(color = Var) 	
+	}
+	return(PCoAplot)	
+}	
+
+
+
+
+#####################################################################################################################################################
+##########################################################       SCRIPT         #####################################################################
+#####################################################################################################################################################
+FDR_pval <- 0.1
+######################################
+###### Read the phyloseq object ######
+load(paste0(working_dir, "/1_infiles/Ileum_biopsies/physeq.ileum.GMPR.RData"))
+physeq_QMP <- physeq.ileum.GMPR
+otable <- as.matrix( otu_table(physeq_QMP))
+
+#####################################
+###### Filter the taxa (motus) ######
+taxa_QMP<-filter_low_prevalence(in.table = otable, max_percentage_0 = 80 ) 
+
+###############################
+###### Variables to use  ######
+load(paste0(working_dir, "/Metadata/metagenomic_varaibles_associations/Biopsy/Variables2Use.RData" ))
+var2se <- as.character(Variables2Use$Var)
+
+####### Subset the variables #######
+Metadata  <- data.frame( sample_data(physeq_QMP) , stringsAsFactors = F )
+Metadata <- Metadata[,match(var2se,colnames(Metadata))]
+#Metadata <- Metadata[,!grepl("Patient_ID",colnames(Metadata))]
+
+PercentNA <- sapply(colnames(Metadata), function(x,Met2=Metadata){
+		NA_N <- table(is.na(Met2[,x]))
+		if( any(names(NA_N) == "TRUE") ){
+			print(x)
+			ret <- NA_N["TRUE"]/nrow(Met2) * 100
+		} else{ret <- 0}
+		return(ret)	
+	}
+)
+
+####### Subset the variables by the percentange of NA #######
+names(PercentNA) <- gsub(".TRUE","",names(PercentNA))
+cbind( colnames(Metadata)  , names(PercentNA)    )
+Varaibles2use <- names(PercentNA[PercentNA <= 10])
+
+load(paste0(working_dir, "/Metadata/metagenomic_varaibles_associations/Biopsy/Var2eliminate.RData" ))
+Variables2eliminate <- Var2eliminate$Var
+Varaibles2use <- Varaibles2use[!Varaibles2use %in% Variables2eliminate]
+
+####### Check the varaible class #######
+for(i in Varaibles2use){
+	print(i)
+	print(class(Metadata[,i]))
+	print(length(unique(Metadata[,i])))
+}
+
+#################################################################################
+########################	ADONIS		###############################
+#################################################################################
+Metadata2use <- Metadata[,match(Varaibles2use,colnames(Metadata))]
+taxa_QMP <- taxa_QMP[,match(rownames(Metadata2use), colnames(taxa_QMP))]
+taxa_QMP <- taxa_QMP[rowSums(taxa_QMP) != 0,]
+taxa_matrix <- t(taxa_QMP)
+
+out_dir  = "./"
+table.ADONIS <- ADONIS_func( in.matrix =  taxa_matrix  , Distance = "euclidean", in.Metadata = data.frame(Metadata2use) , prefix = paste0(out_dir,"/euclidean") )
+table.ADONIS <- table.ADONIS[order(table.ADONIS$p.value),]
+
+
+#################################################################################
+########################	Plot all the PCoA	###############################
+#################################################################################
+PCoA_plot_dir <- "./PCoA_plot_dir"
+dir.create(PCoA_plot_dir)
+list_PCoA <- list()
+sum <- 1
+for(i in rownames(table.ADONIS)){
+	PCoA <- PCoA_grapper(Var = i, tempMetadata = Metadata2use, table.ADONIS=table.ADONIS,taxa_mat=taxa_matrix)
+	list_PCoA[[sum]] <-PCoA
+	ggsave(paste0(PCoA_plot_dir,"/",i,".pdf"), PCoA, width=7, height=6)
+	sum <- sum +1
+	rm(PCoA	)
+
+
+}
+
+AllPCoAs  <-   ggarrange( plotlist = list_PCoA )
+ggsave("AllPCoAs.pdf", AllPCoAs, width=40, height=20)
+AllPCoAs
+
+#################################################################################
+########################	ordiR2step		#####################
+#################################################################################
+if(any(table.ADONIS$BH.adj.p.value < FDR_pval) == F ){
+	print("NOT SIGNIFICANT VARIABLES FOR THE ordiR2step")
+}else{
+
+	table.ADONIS <- data.frame(table.ADONIS)
+	table.ADONIS$BH.adj.p.value <- as.numeric(as.character(table.ADONIS$BH.adj.p.value))
+	table.ADONIS <- subset(table.ADONIS,BH.adj.p.value < FDR_pval)
+
+	Metadata2use <- Metadata2use[ , match( as.character(table.ADONIS$Variable) , colnames(Metadata2use)) ]
+	Metadata2use <- Metadata2use[complete.cases(Metadata2use),]
+	N<-dim(Metadata2use)[1] # N samples
+
+	#####  bray
+	taxa_matrix <- taxa_matrix[match( rownames(Metadata2use) ,  rownames(taxa_matrix)),]
+
+	########################	ordiR2step		#########################
+	capscale_bray<-capscale_cum_variance( in.matrix =  taxa_matrix , Distance = "euclidean", in.Metadata = data.frame(Metadata2use),adj.pval.cutof =FDR_pval, prefix = "euclidean")
+	capscale_bray
+	#capscale_bray[["non_redundant"]]
+
+	#### write tables 
+	Table_capscale_all <- data.frame(capscale_bray$all)
+	Table_capscale_all[order(Table_capscale_all$p.value),]
+	Table_capscale_all$N <- N
+	write.table(Table_capscale_all,"Table_capscale_all.tsv",col.names=T,row.names = T,quote=FALSE,sep = "\t")
+
+	Table_capscale_non_redundant <- data.frame(capscale_bray$non_redundant)
+	Table_capscale_non_redundant$N <- N
+	write.table(Table_capscale_non_redundant,"Table_capscale_non_redundant.tsv",col.names=T,row.names = T,quote=FALSE,sep = "\t")
+
+
+	#####  Plot  Bray 
+	capscale_bray2plot<-nonredundant2plot(non.redundant = capscale_bray[["non_redundant"]], all.var = capscale_bray[["all"]] )
+
+	P<- ggplot(data=capscale_bray2plot[["nr"]], aes(x=Variable, y=R2, fill=Variance)) +
+		geom_bar(stat="identity", position=position_dodge()) + theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+		 ggtitle("BC distance all variables")
+	ggsave("euclidean_ordiR2step.pdf",plot=P)	
+
+
+	if(all(capscale_bray != "Non significant variables")){
+		NR_capscale <- capscale_bray[["non_redundant"]]
+		capscale_bray2plot<-nonredundant2plot(non.redundant = NR_capscale, all.var = capscale_bray[["all"]] )
+		capscale_bray2plot_sig <- capscale_bray2plot[["nr_sig"]]
+
+		Pclr<- ggplot(data=capscale_bray2plot_sig, aes(x=Variable, y=R2, fill=Variance)) + geom_bar(stat="identity", position=position_dodge())  +
+			theme_minimal() + ggtitle("Non-redundant variation") + theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 15))    #+  coord_flip() 
+		ggsave("euclidean_ordiR2step_sig.pdf",plot=Pclr,width = 12)	
+
+		capscale_bray2plot_sig <- capscale_bray2plot_sig[capscale_bray2plot_sig$Variance != "Unconstrain",]
+		capscale_bray2plot_sig$Variance <- factor(as.character(capscale_bray2plot_sig$Variance), levels=c("R2","Cum_R2"))
+		PvarNR <- ggplot(data=capscale_bray2plot_sig, aes(x=Variable, y=R2, fill=Variance)) + geom_bar(stat="identity", position=position_dodge())  +
+			theme_minimal() + ggtitle("Non-redundant variation") + theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 15)) + #+  coord_flip() 
+			scale_fill_manual(values=c("#440154","#21908c"))
+		ggsave("euclidean_ordiR2step_sig_brief.pdf",plot=PvarNR,width = 7)
+			
+		
+	}											
+}
+

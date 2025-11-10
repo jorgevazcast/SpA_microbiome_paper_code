@@ -24,6 +24,20 @@ All scripts used in the analysis are available in the `script` directory
 * `/scripts/2_alpha_diversity/Ileum/Diversity_test.R`
 * `/scripts/2_alpha_diversity/mOTUs/Diversity_test.R`
 
+**3_beta_diversity**
+* `/scripts/3_beta_diversity/Beta_diversity_colon_biopsies_genus/Beta_diversity.R`
+* `/scripts/3_beta_diversity/Beta_diversity_colon_biopsies_sv/Beta_diversity.R`
+* `/scripts/3_beta_diversity/Beta_diversity_ileum_biopsies_sv/Beta_diversity.R`
+* `/scripts/3_beta_diversity/Beta_diversity_metabolomics/Beta_diversity.R`
+* `/scripts/3_beta_diversity/Beta_diversity_shotgun_gmm_Treatment_response/Beta_diversity.R`
+* `/scripts/3_beta_diversity/Beta_diversity_shotgun_motus/Beta_diversity.R`
+* `/scripts/3_beta_diversity/Beta_diversity_shotgun_motus_Treatment_response/Beta_diversity.R`
+* `/scripts/3_beta_diversity/Beta_diversity_shotgun_gmm/Bray/Beta_diversity.R`
+* `/scripts/3_beta_diversity/Beta_diversity_shotgun_gmm/Canberra/Beta_diversity.R`
+* `/scripts/3_beta_diversity/Beta_diversity_shotgun_kegg/Bray/Beta_diversity.R`
+* `/scripts/3_beta_diversity/Beta_diversity_shotgun_kegg/Canberra/Beta_diversity.R`
+
+
 ## Raw data
 FASTQ files for the project can be found under the following EGA accession number
 
