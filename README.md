@@ -38,22 +38,25 @@ All scripts used in the analysis are available in the `script` directory
 * `/scripts/3_beta_diversity/Beta_diversity_shotgun_kegg/Canberra/Beta_diversity.R`
 
 **4_biomarkers**
+>
+Biomarkers
 ###### Biomarkers
 * `/scripts/4_biomarkers/Biomarkers_response_gogut_prediction/boot632_biomarkers.R`
 * `/scripts/4_biomarkers/Biomarkers_response_gogut_stability/glmnet.R`
 * `/scripts/4_biomarkers/Cofound_glmnet_biomarkers/glmnet.R`
-
-###### Differential abundance
-Run the Differential abundance
+>
+Differential abundance
+######Run the Differential abundance
 * `/scripts/4_biomarkers/Biopsies/Biopsies_DA_pipeline.sh`
 * `/scripts/4_biomarkers/GMM/Biopsies_DA_pipeline.sh`
 * `/scripts/4_biomarkers/mOTUs/Biopsies_DA_pipeline.sh`
 >
-Differential abundance in the gogut dataset
+######Differential abundance in the gogut dataset
 * `/scripts/4_biomarkers/Metabolome/Biopsies_DA_pipeline.sh`
 * `/scripts/4_biomarkers/GMM_gogut/1_DAT.sh`
 * `/scripts/4_biomarkers/mOTUs_gogut/1_DAT.sh`
 
+**5_Bayesian_network**
 
 ## Raw data
 FASTQ files for the project can be found under the following EGA accession number
