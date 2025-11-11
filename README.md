@@ -45,7 +45,7 @@ Biomarkers
 * `/scripts/4_biomarkers/Cofound_glmnet_biomarkers/glmnet.R`
 >
 Differential abundance
-###### Run the Differential abundance
+###### Run the Differential abundance in the BEGiant dataset
 * `/scripts/4_biomarkers/Biopsies/Biopsies_DA_pipeline.sh`
 * `/scripts/4_biomarkers/GMM/Biopsies_DA_pipeline.sh`
 * `/scripts/4_biomarkers/mOTUs/Biopsies_DA_pipeline.sh`

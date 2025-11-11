@@ -63,9 +63,9 @@ for(i in Varaibles2use){
 	print(length(unique(Metadata[,i])))
 }
 
-#################################################################################
-########################	ADONIS		###############################
-#################################################################################
+#######################################################################
+########################	ADONIS	###############################
+#######################################################################
 Metadata2use <- Metadata[,match(Varaibles2use,colnames(Metadata))]
 taxa_QMP <- taxa_QMP[,match(rownames(Metadata2use), colnames(taxa_QMP))]
 taxa_QMP <- taxa_QMP[rowSums(taxa_QMP) != 0,]
@@ -76,9 +76,9 @@ bray.table.ADONIS <- ADONIS_func( in.matrix =  taxa_matrix  , Distance = "bray",
 bray.table.ADONIS <- bray.table.ADONIS[order(bray.table.ADONIS$p.value),]
 
 
-#################################################################################
-########################	Plot all the PCoA	###############################
-#################################################################################
+##########################################################################
+########################	Plot all the PCoA	########################
+##########################################################################
 PCoA_plot_dir <- "./PCoA_plot_dir"
 dir.create(PCoA_plot_dir)
 list_PCoA <- list()
@@ -118,10 +118,9 @@ AllNMDS  <-   ggarrange( plotlist = list_NMDS )
 ggsave("AllNMDS.pdf", AllNMDS, width=40, height=20)
 AllNMDS
 
-
-#################################################################################
-########################	ordiR2step		#####################
-#################################################################################
+##########################################################################
+########################	ordiR2step	########################
+##########################################################################
 bray.table.ADONIS <- data.frame(bray.table.ADONIS)
 bray.table.ADONIS$BH.adj.p.value <- as.numeric(as.character(bray.table.ADONIS$BH.adj.p.value))
 bray.table.ADONIS <- subset(bray.table.ADONIS,BH.adj.p.value < FDR_pval)
@@ -133,7 +132,7 @@ N<-dim(Metadata2use)[1] # N samples
 #####  bray
 taxa_matrix <- taxa_matrix[match( rownames(Metadata2use) ,  rownames(taxa_matrix)),]
 
-########################	ordiR2step		#########################
+########################	ordiR2step	########################
 capscale_bray<-capscale_cum_variance( in.matrix =  taxa_matrix , Distance = "bray", in.Metadata = data.frame(Metadata2use),adj.pval.cutof =FDR_pval, prefix = "bray")
 capscale_bray
 #capscale_bray[["non_redundant"]]

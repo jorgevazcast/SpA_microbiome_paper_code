@@ -128,9 +128,9 @@ for(i in Varaibles2use){
 	print(length(unique(Metadata[,i])))
 }
 
-#################################################################################
-########################	ADONIS		###############################
-#################################################################################
+#######################################################################
+########################	ADONIS	###############################
+#######################################################################
 Metadata2use <- Metadata[,match(Varaibles2use,colnames(Metadata))]
 taxa_QMP <- taxa_QMP[,match(rownames(Metadata2use), colnames(taxa_QMP))]
 taxa_QMP <- taxa_QMP[rowSums(taxa_QMP) != 0,]
@@ -162,9 +162,9 @@ AllPCoAs  <-   ggarrange( plotlist = list_PCoA )
 ggsave("AllPCoAs.pdf", AllPCoAs, width=40, height=20)
 AllPCoAs
 
-#################################################################################
-########################	ordiR2step		#####################
-#################################################################################
+##########################################################################
+########################	ordiR2step	########################
+##########################################################################
 if(any(table.ADONIS$BH.adj.p.value < FDR_pval) == F ){
 	print("NOT SIGNIFICANT VARIABLES FOR THE ordiR2step")
 }else{
@@ -180,7 +180,7 @@ if(any(table.ADONIS$BH.adj.p.value < FDR_pval) == F ){
 	#####  bray
 	taxa_matrix <- taxa_matrix[match( rownames(Metadata2use) ,  rownames(taxa_matrix)),]
 
-	########################	ordiR2step		#########################
+	########################	ordiR2step	########################
 	capscale_bray<-capscale_cum_variance( in.matrix =  taxa_matrix , Distance = "euclidean", in.Metadata = data.frame(Metadata2use),adj.pval.cutof =FDR_pval, prefix = "euclidean")
 	capscale_bray
 	#capscale_bray[["non_redundant"]]
