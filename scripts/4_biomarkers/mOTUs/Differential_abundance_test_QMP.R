@@ -7,20 +7,9 @@ library(ACAT) # ACAT takes a series of p-values ​​(e.g., from different stat
 
 argscomd = commandArgs(trailingOnly=TRUE)
 
-#GMPR.file <- as.character(argscomd[1])
 rar.file <- as.character(argscomd[1])
-#above10000.file <- as.character(argscomd[3])
-#clr.file <- as.character(argscomd[4])
 Variable = as.character(argscomd[2]) ## Variable = "Disease_activity" # Histological_Inflammation Histology  Variable = "Disease"
-#Tax = as.character(argscomd[6]) ## "GreenGenes2" "GTDB_r86" "GTDB_r202" "GTDB_r207" "GTDB_r220" "rdp_16" "rdp_19" "silva_v138_2" "Consensus_sp"
-# GMPR.file <- "/home/luna.kuleuven.be/u0141268/Postdoc_Raes/Projects/giant_cohort_spa/1_infiles/Colon_biopsies/GTDB_r220/physeq_sv.rar.gmpr.rds"
-# rar.file <- "/home/luna.kuleuven.be/u0141268/Postdoc_Raes/Projects/giant_cohort_spa/1_infiles/Colon_biopsies/GTDB_r220/physeq_sv.rar.rds"
-# rar.file <- "/home/luna.kuleuven.be/u0141268/Postdoc_Raes/Projects/giant_cohort_spa/1_infiles/QMP_mOTUS/physeq.qmp.motus.RData"
-# above10000.file <- "/home/luna.kuleuven.be/u0141268/Postdoc_Raes/Projects/giant_cohort_spa/1_infiles/Colon_biopsies/GTDB_r220/physeq_sv.rds"
-# clr.file <- "/home/luna.kuleuven.be/u0141268/Postdoc_Raes/Projects/giant_cohort_spa/1_infiles/Colon_biopsies/GTDB_r220/physeq_sv.rar.clr.rds"
-# Variable = "Disease" # "Diagnosis" "Disease"
-# Tax = "Consensus_sp"
-#cat("\n Parameters: ", "\n", GMPR.file, "\n", rar.file, "\n", above10000.file, "\n", clr.file,"\n", Variable,"\n", Tax,"\n" )
+
 cat("\n Parameters: ", "\n", rar.file,"\n", Variable,"\n", "\n" )
 #################################
 ######## q-value cut-off ########
@@ -30,14 +19,11 @@ p_val_cut_off <- 0.1
 ##########################################              Load the functions                       ######################################
 #######################################################################################################################################
 
-path_func <- "/home/luna.kuleuven.be/u0141268/github_projects/CATBD"
-#source(paste0(path_func,"/Functions/functions_Biomarker.R"))
-source(paste0(path_func,"/Functions/data_processing_functions.R"))
-source(paste0(path_func,"/Functions/statistical_test_functions.R"))
+working_dir <- "~/github_shared_code_and_publications/SpA_microbiome_paper_code" 
 
-path_func_SpA <- "/home/luna.kuleuven.be/u0141268/Postdoc_Raes/Projects/giant_cohort_spa"
-source(paste0(path_func_SpA,"/functions/CATDB_supplementary_functions.R"))
-
+source(paste0(working_dir,"/functions/data_processing_functions.R"))
+source(paste0(working_dir,"/functions/statistical_test_functions.R"))
+source(paste0(working_dir,"/functions/CATDB_supplementary_functions.R"))
 
 #######################################################################################################################################
 ##########################################                  Read the data                        ######################################

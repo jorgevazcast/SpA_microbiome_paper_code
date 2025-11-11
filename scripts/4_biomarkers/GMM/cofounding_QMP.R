@@ -8,7 +8,7 @@ argscomd = commandArgs(trailingOnly=TRUE)
 
 rar.file <- as.character(argscomd[1])
 Variable = as.character(argscomd[2]) ## Variable = "Disease_activity" # Histological_Inflammation Histology Disease
-sig_features =  as.character(argscomd[3]) # "/home/luna.kuleuven.be/u0141268/Postdoc_Raes/Projects/giant_cohort_spa/4_biomarkers/Biopsies/Consensus_sp/Ileum/Disease/q_values_table.tsv"
+sig_features =  as.character(argscomd[3]) 
 cat("\n Parameters: ", "\n", rar.file,"\n", Variable,"\n", sig_features,"\n" )
 
 ###############################################
@@ -26,16 +26,12 @@ p_val_cut_off <- 0.1
 ##########################################              Load the functions                       ######################################
 #######################################################################################################################################
 
-path_func <- "/home/luna.kuleuven.be/u0141268/github_projects/CATBD"
-#source(paste0(path_func,"/Functions/functions_Biomarker.R"))
-source(paste0(path_func,"/Functions/data_processing_functions.R"))
-source(paste0(path_func,"/Functions/statistical_test_functions.R"))
+working_dir <- "~/github_shared_code_and_publications/SpA_microbiome_paper_code" 
 
-path_func_SpA <- "/home/luna.kuleuven.be/u0141268/Postdoc_Raes/Projects/giant_cohort_spa"
-source(paste0(path_func_SpA,"/functions/CATDB_supplementary_functions.R"))
-
-path_func_stats <- "/home/luna.kuleuven.be/u0141268/github_projects/supplementary-statistical-functions"
-source(paste0(path_func_stats,"/Functions/Statistical_model_tools.R"))
+source(paste0(working_dir,"/functions/data_processing_functions.R"))
+source(paste0(working_dir,"/functions/statistical_test_functions.R"))
+source(paste0(working_dir,"/functions/CATDB_supplementary_functions.R"))
+source(paste0(working_dir,"/functions/Statistical_model_tools.R"))
 
 #######################################################################################################################################
 ##########################################                  Read the data                        ######################################
@@ -58,7 +54,7 @@ Sig_taxas <- apply(   q_values_table[, 2:(ncol(q_values_table)-1)], 1, function(
 q_values_table_sig <- q_values_table[Sig_taxas,]
 
 #######################################################################################################################################################
-##########################################                   Cofound by the age                         ######################################
+##########################################                   Cofound by the age                   #####################################################
 #######################################################################################################################################################
 
 Features <- unique(q_values_table_sig$Feature)

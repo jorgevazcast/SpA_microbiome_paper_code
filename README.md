@@ -44,8 +44,14 @@ All scripts used in the analysis are available in the `script` directory
 * `/scripts/4_biomarkers/Cofound_glmnet_biomarkers/glmnet.R`
 
 ###### Differential abundance
+Run the Differential abundance
 * `/scripts/4_biomarkers/Biopsies/Biopsies_DA_pipeline.sh`
 * `/scripts/4_biomarkers/GMM/Biopsies_DA_pipeline.sh`
+* `/scripts/4_biomarkers/mOTUs/Biopsies_DA_pipeline.sh`
+Differential abundance in the gogut dataset
+* `/scripts/4_biomarkers/Metabolome/Biopsies_DA_pipeline.sh`
+* `/scripts/4_biomarkers/GMM_gogut/1_DAT.sh`
+* `/scripts/4_biomarkers/mOTUs_gogut/1_DAT.sh`
 
 
 ## Raw data

@@ -1,7 +1,0 @@
-Feature	Mean	SD	Increase	WTSignificant
-MC0018_cellulose_and_hemicellulose_degradation__cellulolosome_	90.0801420231902	12.6005124066672	Disease.HC	*
-MF0003_pectin_degradation_I	81.2871658382217	24.7852299556581	Disease.HC	*
-MF0013_allose_degradation	1.97766392572836	4.28449167231549	Disease.HC	*
-MF0056_histidine_degradation	36.4224709496831	25.3492505733999	Disease.HC	*
-MF0102_sulfate_reduction__dissimilatory_	37.6129791575138	30.5358887843829	Disease.HC	*
-MGB021_GABA_synthesis_I	49.3709103024543	30.5606635778891	Disease.SpA	
