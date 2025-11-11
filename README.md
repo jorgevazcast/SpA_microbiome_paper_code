@@ -48,6 +48,7 @@ Run the Differential abundance
 * `/scripts/4_biomarkers/Biopsies/Biopsies_DA_pipeline.sh`
 * `/scripts/4_biomarkers/GMM/Biopsies_DA_pipeline.sh`
 * `/scripts/4_biomarkers/mOTUs/Biopsies_DA_pipeline.sh`
+>
 Differential abundance in the gogut dataset
 * `/scripts/4_biomarkers/Metabolome/Biopsies_DA_pipeline.sh`
 * `/scripts/4_biomarkers/GMM_gogut/1_DAT.sh`
