@@ -12,7 +12,8 @@ R packages:
 
 Important! Change the working directory before loading the different functions
 ```R
-working_dir <- "~/github_shared_code_and_publications/SpA_microbiome_paper_code" 
+working_dir <- "~/github_shared_code_and_publications/SpA_microbiome_paper_code"
+path_func <- "~/github_shared_code_and_publications/SpA_microbiome_paper_code/functions" 
 ```
 
 ## Scripts
@@ -56,6 +57,14 @@ Differential abundance
 * `/scripts/4_biomarkers/mOTUs_gogut/1_DAT.sh`
 
 **5_Bayesian_network**
+>
+Bayesian network inference
+* `/scripts/5_network/SpA_Disease/Bayesian_network_pipeline.sh`
+>
+Bootstrapping and arc strength
+###### The arc strength estimation and Bayesian network bootstrapping were performed using a Sun Grid Engine (SGE) queuing cluster architecture (via a qsub submission script)
+* `/scripts/5_network/SpA_Disease/Cluster_scripts/run_bn_bootstrap_learning.sh`
+
 
 ## Raw data
 FASTQ files for the project can be found under the following EGA accession number

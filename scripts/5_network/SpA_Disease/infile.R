@@ -4,17 +4,15 @@ library(microbiome)
 library(igraph)
 library(bnlearn)
 
-path_func_stats <- "/home/luna.kuleuven.be/u0141268/github_projects/supplementary-statistical-functions"
-source(paste0( path_func_stats,"/Functions/Extended_Statistical_Toolkit_functions.R" ))
-
-path_func <- "/home/luna.kuleuven.be/u0141268/Postdoc_Raes/Projects/giant_cohort_spa/functions"
+path_func <- "~/github_shared_code_and_publications/SpA_microbiome_paper_code/functions"
+source(paste0( path_func,"/Functions/Extended_Statistical_Toolkit_functions.R" ))
 source(paste0( path_func,"/Network_supplementary_functions.R" ))
 source(paste0( path_func,"/bnlearn_supplementary_functions.R" ))
 
 #####################################################################################################################################################
 ##########################################################         SCRIPT             ###############################################################
 #####################################################################################################################################################
-path_wd <- "/home/luna.kuleuven.be/u0141268/Postdoc_Raes/Projects/giant_cohort_spa/1_infiles"
+path_wd <- "~/github_shared_code_and_publications/SpA_microbiome_paper_code/1_infiles"
 Nboot <- 1000
 ######################################
 ###### Read the phyloseq object ######
@@ -97,22 +95,7 @@ Sample_data <- Sample_data[match( Samples2Use, rownames(Sample_data)),]
 ### Boolean
 Disease <- binary_matrix(var=Sample_data$Disease,var.name="Disease",return_factor=T)
 Disease.SpA <- Disease[,c("Disease.SpA")]
-#Disease_activity <- binary_matrix(var=Sample_data$Disease_activity,var.name="Disease_activity",return_factor=T)
-#Disease_activity <- Disease_activity[,c("Disease_activity.SpAHigh","Disease_activity.SpALow")]
-#NSAID_use <- binary_matrix(var=Sample_data$NSAID_use,var.name="NSAID_use",return_factor=T)
-#NSAID_use.NO <- NSAID_use[,c("NSAID_use.NO")]
-#Smoking <- binary_matrix(var=Sample_data$Smoking,var.name="Smoking",return_factor=T)
-#Smoking.history <- Smoking[,c("Smoking.history")]
-#inflam_back_pain <- binary_matrix(var=Sample_data$inflam_back_pain...47,var.name="inflam_back_pain...47",return_factor=T)
-#enthesitis_general <- binary_matrix(var=Sample_data$enthesitis_general,var.name="enthesitis_general",return_factor=T)
-#uveitis <- binary_matrix(var=Sample_data$uveitis,var.name="uveitis",return_factor=T)
-## Cont 
-#Fecal_calpro_values <- Sample_data$Fecal_calpro_values
-#Age_at_visit <- Sample_data$Age_at_visit
 
-### Optional ###
-#Water <- Sample_data$Water
-#BMI <- Sample_data$BMI
 Enterotype <- binary_matrix(var=Sample_data$enterotype,var.name="enterotype",return_factor=T)
 ##########################################################
 ################     Join the tables      ################
@@ -183,28 +166,4 @@ df2bnlearn<-df2bnlearn[complete.cases(df2bnlearn),]
 
 dir.create("infile")
 saveRDS(file = "./infile/df2bnlearn.rds" , df2bnlearn)
-
-#SpAfeatures <- c("Boolean.Disease_activity.SpAHigh","Boolean.Disease_activity.SpALow","Boolean.Disease.SpA")
-#SpAfeatures <- c("Boolean.Disease_activity.SpAHigh","Boolean.Disease_activity.SpALow","Boolean.Disease_activity.HC")
-
-# retBNlearns <- hc( df2bnlearn, score = "custom", fun = my.bic.GLM, args = list() , blacklist = Blist  )
-# retBNlearns <- hc( df2bnlearn, score = "custom", fun = my.bic.GLM, args = list()  )
-
-# g_bn <- as.igraph(retBNlearns)
-#pdf("retBNlearns.pdf", width = 12, height =12)
-# plot(g_bn, vertex.label.cex = 0.5, vertex.color = "lightblue",vertex.frame.color = "gray", vertex.label.color = "black",edge.arrow.size = 0.5,layout = layout_with_fr)
-#dev.off()
-# mb(retBNlearns,"Linear.Tryptamine")
-# mb(retBNlearns,"Boolean.enterotype.Bacteroides_2")
-# mb(retBNlearns,"Boolean.Bacteroides_2")
-# mb(retBNlearns,"Boolean.Disease.SpA")
-# mb(retBNlearns,"Boolean.Disease_activity.SpAHigh")
-# mb(retBNlearns,"Linear.Water")
-# mb(retBNlearns,"Boolean.Disease_activity.HC")
-# mb(retBNlearns,"QMP.Ruminococcus__gnavus__ref_mOTU_v25_01594_")
-
-# mb(retBNlearns,"Linear.Fecal_calpro_values")
-# mb(retBNlearns,"Boolean.Boolean.Disease_activity.SpAHigh")
-
-
 

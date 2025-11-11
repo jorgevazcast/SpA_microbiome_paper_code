@@ -1,6 +1,6 @@
 set.seed(12345)
 
-df2bnlearn <- readRDS(file = "./infile/df2bnlearn.rds")
+df2bnlearn <- readRDS(file = "../infile/df2bnlearn.rds")
 
 list_df <- list()
 for(i in 1:500){
