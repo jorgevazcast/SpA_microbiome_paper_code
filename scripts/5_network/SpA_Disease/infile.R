@@ -5,7 +5,7 @@ library(igraph)
 library(bnlearn)
 
 path_func <- "~/github_shared_code_and_publications/SpA_microbiome_paper_code/functions"
-source(paste0( path_func,"/Functions/Extended_Statistical_Toolkit_functions.R" ))
+source(paste0( path_func,"/Extended_Statistical_Toolkit_functions.R" ))
 source(paste0( path_func,"/Network_supplementary_functions.R" ))
 source(paste0( path_func,"/bnlearn_supplementary_functions.R" ))
 
