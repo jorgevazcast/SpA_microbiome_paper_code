@@ -66,9 +66,10 @@ Bootstrapping and arc strength
 * `/scripts/5_network/SpA_Disease/Cluster_scripts/run_bn_bootstrap_learning.sh`
 
 **6_mice_experiments**
-###### Beta diversity
+>
+Beta diversity
 * `/scripts/6_mice_experiments/Beta_diversity/Mice_data_Beta_div.R`
-###### Beta diversity
+Beta diversity
 * `/scripts/6_mice_experiments/Beta_diversity/Mice_data_Beta_div.R`
 
 
