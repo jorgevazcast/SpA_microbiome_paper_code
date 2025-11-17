@@ -66,8 +66,10 @@ Bootstrapping and arc strength
 * `/scripts/5_network/SpA_Disease/Cluster_scripts/run_bn_bootstrap_learning.sh`
 
 **6_mice_experiments**
->
-/home/luna.kuleuven.be/u0141268/github_shared_code_and_publications/SpA_microbiome_paper_code/scripts/6_mice_experiments/Diff_abundance_Qfemto/run_Diff_abundance_Qfemto.sh
+###### Beta diversity
+* `/scripts/6_mice_experiments/Beta_diversity/Mice_data_Beta_div.R`
+###### Beta diversity
+* `/scripts/6_mice_experiments/Beta_diversity/Mice_data_Beta_div.R`
 
 
 ## Raw data
