@@ -1,11 +1,7 @@
 library("wesanderson")
 library(grDevices)
-library("corrplot")
-corrplot.bis<-corrplot
 library(vegan)
 library(ade4)
-#library(Matrix)
-#library(mlbench) ## Smooth plots
 library(cluster)
 library("RColorBrewer")
 library("phyloseq")

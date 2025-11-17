@@ -3,12 +3,7 @@ This repository contains a comprehensive pipeline for analyzing gut microbiome d
 
 ## Software requirements
 ###### R version 4.1.2 (2021-11-01) -- "Bird Hippie"
-R packages:
-* caret_6.0-86
-* DMwR_0.4.1
-* ROSE_0.0-4
-* pROC_1.17.0.1
-* mltools_0.3.5
+* `/docs/sessionInfo.txt`
 
 Important! Change the working directory before loading the different functions
 ```R
