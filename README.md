@@ -69,9 +69,10 @@ Bootstrapping and arc strength
 >
 Beta diversity
 * `/scripts/6_mice_experiments/Beta_diversity/Mice_data_Beta_div.R`
-Beta diversity
-* `/scripts/6_mice_experiments/Beta_diversity/Mice_data_Beta_div.R`
-
+>
+Biomarkers
+* `/scripts/6_mice_experiments/Biomarkers/WT_diff/WT_diff.R`
+* `/scripts/6_mice_experiments/Biomarkers/Corr_W12_metadata/corr_Meta.R`
 
 ## Raw data
 FASTQ files for the project can be found under the following EGA accession number

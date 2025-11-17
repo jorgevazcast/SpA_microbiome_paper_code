@@ -2,18 +2,12 @@ set.seed(12345)
 library(phyloseq)
 library(microbiome)
 
-path_project <- "/home/luna.kuleuven.be/u0141268/Postdoc_Raes/Projects/giant_cohort_spa"
+path_project <-  "~/github_shared_code_and_publications/SpA_microbiome_paper_code" 
 
-path_pfc <- "/home/luna.kuleuven.be/u0141268/github_projects/phyloseq_format_converter"
-source(paste0(path_pfc,"/Functions/Utils.R"))
-
-path_mdk <- "/home/luna.kuleuven.be/u0141268/github_projects/microbiomediversitykit"
-source(paste0(path_mdk,"/Functions/beta_diver_functions.R"))
-source(paste0(path_mdk,"/Functions/plot_beta_diver_functions.R"))
-
-path_estk <- "/home/luna.kuleuven.be/u0141268/github_projects/supplementary-statistical-functions"
-source(paste0(path_estk,"/Functions/Extended_Statistical_Toolkit_functions.R"))
-
+source(paste0(path_project,"/functions/Utils.R"))
+source(paste0(path_project,"/functions/beta_diver_functions.R"))
+source(paste0(path_project,"/functions/plot_beta_diver_functions.R"))
+source(paste0(path_project,"/functions/Extended_Statistical_Toolkit_functions.R"))
 source(paste0(path_project,"/functions/supplementary_figures_functions.R"))
 
 ###########################################################################################################################
@@ -63,7 +57,7 @@ WTdiff_func <- function(phylo_in,week,Prevalence_filter){
 EE <- "ee2"
 ###############################
 ####  Read the infiles   ######
-phyloseq_in <- readRDS(file=paste0(working_dir,"/1_infiles/mice_PacBio_data/phyloseq_20k_",EE,"/physeq_sv_decontam_Qfemto.rds"))
+phyloseq_in <- readRDS(file=paste0(path_project,"/1_infiles/mice_PacBio_data/phyloseq_20k_",EE,"/physeq_sv_decontam_Qfemto.rds"))
 taxa_names(phyloseq_in) <- paste0( c(tax_table(phyloseq_in)[,7]) , "_sv_" , 1:ntaxa(phyloseq_in)) 
 taxa_names(phyloseq_in) <- gsub(" ","_",taxa_names(phyloseq_in))
 

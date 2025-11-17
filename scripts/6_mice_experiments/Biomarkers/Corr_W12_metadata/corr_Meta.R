@@ -6,16 +6,16 @@ library(microbiome)
 qval_cutoff  <- 0.1
 ESize_r_cutoff <- 0.3
 EE <- "ee2"
+
+path_project <-  "~/github_shared_code_and_publications/SpA_microbiome_paper_code" 
+
 ###############################
 ####  Read the infiles   ######
 
-path_estk <- "/home/luna.kuleuven.be/u0141268/github_projects/supplementary-statistical-functions"
-source(paste0(path_estk,"/Functions/Extended_Statistical_Toolkit_functions.R"))
-
-path_project <- "/home/luna.kuleuven.be/u0141268/Postdoc_Raes/Projects/giant_cohort_spa"
+source(paste0(path_project,"/functions/Extended_Statistical_Toolkit_functions.R"))
 source(paste0(path_project,"/functions/supplementary_figures_functions.R"))
 
-phyloseq_in <- readRDS(file=paste0(working_dir,"/1_infiles/mice_PacBio_data/phyloseq_20k_",EE,"/physeq_sv_decontam_Qfemto.rds"))
+phyloseq_in <- readRDS(file=paste0(path_project,"/1_infiles/mice_PacBio_data/phyloseq_20k_",EE,"/physeq_sv_decontam_Qfemto.rds"))
 taxa_names(phyloseq_in) <- paste0( c(tax_table(phyloseq_in)[,7]) , "_sv_" , 1:ntaxa(phyloseq_in)) 
 taxa_names(phyloseq_in) <- gsub(" ","_",taxa_names(phyloseq_in))
 
@@ -24,10 +24,7 @@ Sample2Use <- Sample2Use[!Sample2Use %in% "Kinnex16S_Fwd_01..Kinnex16S_Rev_13"]
 Sample2Use <- Sample2Use[!Sample2Use %in% "X44_batch1"]
 phyloseq_in <- prune_samples(Sample2Use,phyloseq_in)
 
-
-sigfiles <- "/home/luna.kuleuven.be/u0141268/Postdoc_Raes/Projects/giant_cohort_spa/6_mice_experiments/Biomarkers"
-
-load(paste0(sigfiles,"/all_samples/WT_diff/WT_w12.RData"))
+load(paste0(path_project,"/6_mice_experiments/Biomarkers/WT_diff/WT_w12.RData"))
 
 WT_w12 <- WT_w12[complete.cases(WT_w12$q.value),]
 sig_features <- WT_w12[WT_w12$q.value < qval_cutoff,]
