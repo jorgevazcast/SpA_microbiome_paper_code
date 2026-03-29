@@ -12,7 +12,7 @@ source(paste0(working_dir,"/functions/supplementary_figures_functions.R"))
 ############################        SCRIPT        ############################
 ##############################################################################
 
-in_phylo <- readRDS(paste0(working_dir,"/1_infiles/Colon_biopsies/GTDB_r220/physeq_genus.rar.rds"))
+in_phylo <- readRDS(paste0(working_dir,"/data/1_infiles/Colon_biopsies/GTDB_r220/physeq_genus.rar.rds"))
 # in_phylo <- physeq.colon.genus.rar
 Metadata <- sample_data(in_phylo)
 

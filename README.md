@@ -11,6 +11,10 @@ working_dir <- "~/github_shared_code_and_publications/SpA_microbiome_paper_code"
 path_func <- "~/github_shared_code_and_publications/SpA_microbiome_paper_code/functions" 
 ```
 
+## Data
+The count tables and minimal metadata (including Disease, Diagnosis, and Disease activity) are available at:
+* `/data/1_infiles`
+
 ## Scripts
 All scripts used in the analysis are available in the `script` directory
 >
@@ -69,8 +73,15 @@ Biomarkers
 * `/scripts/6_mice_experiments/Biomarkers/WT_diff/WT_diff.R`
 * `/scripts/6_mice_experiments/Biomarkers/Corr_W12_metadata/corr_Meta.R`
 
-## Raw data
-FASTQ files for the project can be found under the following EGA accession number
+**ML predictions** 
+The machine learning pipeline used for these analyses is publicly available and fully reproducible at:
+https://github.com/jorgevazcast/Liver_Disease_Microbiome_ML
 
+## Raw data
+FASTQ files for this project are available through the European Genome-phenome Archive (EGA) under the following accession numbers:
+
+- Study: EGAS50000001435
+- Dataset: EGAD50000002070
+- Data Access Committee (DAC): EGAC00001003263
 
 
